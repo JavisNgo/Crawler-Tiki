@@ -44,23 +44,25 @@ public class CrawlerTiki {
             myBrowser.get("https://tiki.vn");
 
             myBrowser.manage().window().maximize();
-            By selector = By.className("style__ProductLink-sc-7xd6qw-2");
+            By selector = By.cssSelector("a.product-item");
+            //By selector = By.className("style__ProductLink-sc-7xd6qw-2");
 
             for (WebElement element : myBrowser.findElements(selector)) {
                 String name = element.findElement(By.cssSelector("div[class='name']")).getText();
                 String price = element.findElement(By.cssSelector("div[class='price-discount__price']")).getText();
+                String link = element.getAttribute("href");
                 try {
                     String discount = element.findElement(By.cssSelector("div[class='price-discount__discount']")).getText();
 //                    System.out.println(name +" "+price);
 //                    System.out.println(discount);
-                    list.add(new ProductDTO(name, price, discount));
+                    list.add(new ProductDTO(name, price, discount, link));
                 } catch (Exception e) {
                     //System.out.println(name +" "+price);
-                    list.add(new ProductDTO(name, price, null));
+                    list.add(new ProductDTO(name, price, null, link));
                 }
             }
             Thread.sleep(5000);
-            myBrowser.close();
+            //myBrowser.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,7 +81,7 @@ public class CrawlerTiki {
                 //String json = gson.toJson(list, productListType);
                 gson.toJson(list, productListType, writer);
                 //writer.write(json);
-            } 
+            }
             System.out.println("Dữ liệu đã được lưu vào tệp JSON.");
         } catch (Exception e) {
             e.printStackTrace();

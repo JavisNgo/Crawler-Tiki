@@ -12,14 +12,16 @@ public class ProductDTO {
     private String name;
     private String price;
     private String discount;
+    private String link;
 
     public ProductDTO() {
     }
 
-    public ProductDTO(String name, String price, String discount) {
+    public ProductDTO(String name, String price, String discount, String link) {
         this.name = name;
         this.price = price;
         this.discount = discount;
+        this.link = link;
     }
 
     public String getName() {
